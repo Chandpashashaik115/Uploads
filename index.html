@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickle Order Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .form-group input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .qr-code {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .qr-code img {
+            max-width: 100%;
+        }
+        .add-pickle {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .add-pickle:hover {
+            background-color: #218838;
+        }
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function addPickle() {
+            const container = document.getElementById('pickles-container');
+            const pickleGroup = document.createElement('div');
+            pickleGroup.className = 'form-group';
+
+            pickleGroup.innerHTML = `
+                <label for="pickle-type">Select Pickle Type:</label>
+                <select name="pickle_type[]" required>
+                    <option value="mango">Mango</option>
+                    <option value="gongura">Gongura</option>
+                    <option value="tomato">Tomato</option>
+                    <option value="usirigaya">Usirigaya</option>
+                    <option value="kakaragaya">Kakaragaya</option>
+                    <option value="lemon">Lemon</option>
+                    <option value="pulihora_gongura">Pulihora Gongura</option>
+                    <option value="chicken">Chicken</option>
+                    <option value="mutton">Mutton</option>
+                    <option value="fish">Fish</option>
+                </select>
+                <label for="quantity">Select Quantity:</label>
+                <select name="quantity[]" required>
+                    <option value="250gm">250 gm</option>
+                    <option value="500gm">500 gm</option>
+                    <option value="750gm">750 gm</option>
+                    <option value="1kg">1 kg</option>
+                    <option value="other">Other</option>
+                </select>
+            `;
+
+            container.appendChild(pickleGroup);
+        }
+
+        function showThankYouMessage() {
+            document.getElementById('order-form').style.display = 'none';
+            document.getElementById('thank-you-message').style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Your Pickle</h1>
+        <form id="order-form" action="submit_order.php" method="post" enctype="multipart/form-data">
+            <div id="pickles-container">
+                <div class="form-group">
+                    <label for="pickle-type">Select Pickle Type:</label>
+                    <select id="pickle-type" name="pickle_type[]" required>
+                        <option value="mango">Mango</option>
+                        <option value="gongura">Gongura</option>
+                        <option value="tomato">Tomato</option>
+                        <option value="usirigaya">Usirigaya</option>
+                        <option value="kakaragaya">Kakaragaya</option>
+                        <option value="lemon">Lemon</option>
+                        <option value="pulihora_gongura">Pulihora Gongura</option>
+                        <option value="chicken">Chicken</option>
+                        <option value="mutton">Mutton</option>
+                        <option value="fish">Fish</option>
+                    </select>
+                    <label for="quantity">Select Quantity:</label>
+                    <select id="quantity" name="quantity[]" required>
+                        <option value="250gm">250 gm</option>
+                        <option value="500gm">500 gm</option>
+                        <option value="750gm">750 gm</option>
+                        <option value="1kg">1 kg</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="add-pickle" onclick="addPickle()">Add Another Pickle</button>
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Shipping Address:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="payment-screenshot">Upload Payment Screenshot:</label>
+                <input type="file" id="payment-screenshot" name="payment_screenshot" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Place Order">
+            </div>
+        </form>
+        <div id="thank-you-message" class="thank-you-message">
+            <h2>Thank you for your order!</h2>
+            <p>You will receive it in 3 business days.</p>
+        </div>
+        <div class="qr-code">
+            <h2>Make Payment</h2>
+            <p>Scan the QR code below to make the payment:</p>
+            <img src="qr.jpg" alt="QR Code for Payment">
+            <p>Or use UPI ID: <strong>chandpasha.y@ybl</strong></p>
+        </div>
+    </div>
+</body>
+</html>
